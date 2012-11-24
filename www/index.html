@@ -7,6 +7,11 @@
         <link rel="stylesheet" type="text/css" href="css/index.css" />
         <link rel="stylesheet" type="text/css" href="css/jquery.mobile.1.2.min.css" />
         <title>Hello World</title>
+		<script>
+			$( '#page2' ).live( 'pagebeforecreate',function(event){
+			  alert( 'This page was just inserted into the dom!' );
+			});
+		</script>
     </head>
     <body>
         <div data-role="page">
