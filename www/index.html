@@ -7,6 +7,9 @@
         <link rel="stylesheet" type="text/css" href="css/index.css" />
         <link rel="stylesheet" type="text/css" href="css/jquery.mobile.1.2.min.css" />
         <title>Hello World</title>
+        <script type="text/javascript" src="cordova-2.2.0.js"></script>
+        <script type="text/javascript" src="js/jquery.1.8.2.min.js"></script>
+        <script type="text/javascript" src="js/jquery.mobile.1.2.min.js"></script>
 		<script>
 			$( '#page2' ).live( 'pagebeforecreate',function(event){
 			  alert( 'This page was just inserted into the dom!' );
@@ -23,34 +26,15 @@
             <div data-role="content">	
                 <p>Hello world</p>	
                 
-                <a data-role="button" href="#page2">Next!</a>	
-				<br />				
-				<a data-role="button" href="html/page3.html">Page 3</a>	
 				<br />
-				<a data-role="button" href="html/page3.html" rel="external">Page 3 B</a>	
-				<br />
-				<a data-role="button" href="/html/page4.html">Page 4</a>	
+				<a data-role="button" href="page5.html">Page 5</a>
+				
+				<a href="page5.html">another one</a>
             </div><!-- /content -->
         
         </div><!-- /page -->
-        
-        <div data-role="page" id="page2">
 
-            <div data-role="header">
-                <h1>Page 2</h1>
-            </div><!-- /header -->
         
-            <div data-role="content">	
-                <p>still alive</p>		
-            </div><!-- /content -->
-        
-        </div><!-- /page -->
-        
-        <script type="text/javascript" src="cordova-2.2.0.js"></script>
-        <script type="text/javascript" src="js/jquery.1.8.2.min.js"></script>
-        <script type="text/javascript" src="js/jquery.mobile.1.2.min.js"></script>
-        <script type="text/javascript">
-            //app.initialize();
-        </script>
+
     </body>
 </html>
