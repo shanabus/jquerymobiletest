@@ -66,8 +66,8 @@
 							alert("there was a problem joining this game");
 						}
 					  },
-						error: function() {
-							alert("could not connect to game");
+						error: function(xhr) {
+							alert("could not connect to game - " + xhr.responseText);
 						}
 					});
 				}
@@ -183,15 +183,7 @@
 					}
 				});
 			}
-			
-			function skipJoin()
-			{
-				PLAYER_ID = 28;
-				GAME_ID = 67;
-				getCurrentGameRound();
-				$.mobile.changePage("#pagePlayGame");				
-			}
-						
+									
 			function stopGame() {
 				clearInterval(QUESTION_LOAD_INTERVAL);
 				clearInterval(CHECK_FOR_ROUND_END_INTERVAL);
@@ -237,6 +229,9 @@
 					</div>
 					<br />
 					<button id="btnJoinGame">Join Game</button>                                
+					<ul id="deviceProperties">
+						<li>Properties go here</li>
+					</ul>
 				</div>	
 			</div><!-- /content -->
 
