@@ -6,13 +6,12 @@
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
         <link rel="stylesheet" type="text/css" href="css/index.css" />
         <link rel="stylesheet" type="text/css" href="css/jquery.mobile.1.2.min.css" />
-        <title>GR TV :: Sample Game</title>
-        <script type="text/javascript" src="cordova-2.2.0.js"></script>
+        <title>GR TV :: Sample Game</title>        
         <script type="text/javascript" src="js/jquery.1.8.2.min.js"></script>
         <script type="text/javascript" src="js/jquery.mobile.1.2.min.js"></script>
 		
 		<script type="text/javascript" charset="utf-8">
-			document.addEventListener("deviceready", myDeviceReadyListener, false);
+			//document.addEventListener("deviceready", myDeviceReadyListener, false);
 			
 			function myDeviceReadyListener() {
 			 console.log("Entering index.html.onDeviceReady");
@@ -28,9 +27,7 @@
 			 $("#deviceProperties").listview('refresh');
 			 console.log("Exiting index.html.onDeviceReady");
 			} 
-		</script>
-		
-		<script>
+
 			var debug = false;
 			
 			var GAME_ID = 0;
@@ -52,7 +49,8 @@
 			
 			$(function() {
 				$("#btnJoinGame").on('click', function() {
-					joinGame();
+					$.mobile.changePage("#pagePlayGame", { transition: "slideup"});
+					//joinGame();
 					//skipJoin();
 				});				
 				
@@ -245,7 +243,7 @@
 					<br />
 					<div data-role="fieldcontain">
 						<label for="txtGameCode">Game Code:</label>
-						<input type="text" value="<?php echo $_REQUEST['gameCode']; ?>" id="txtGameCode" maxlength="4" />
+						<input type="text" value="" id="txtGameCode" maxlength="4" />
 					</div>
 					<br />
 					<button id="btnJoinGame">Join Game</button>                                
