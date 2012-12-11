@@ -48,9 +48,8 @@
 			var CURRENT_SCORE = 0;
 			
 			$(function() {
-				$("#btnJoinGame").on('click', function() {
-					$.mobile.changePage("#pagePlayGame", { transition: "slideup"});
-					//joinGame();
+				$("#btnJoinGame").on('click', function() {					
+					joinGame();
 					//skipJoin();
 				});				
 				
@@ -63,6 +62,29 @@
 				});
 			});
 			
+			function joinGame() {
+				var name = $("#txtName").val();
+				var gameCode = $("#txtGameCode").val();
+				if (name != "" && gameCode != "") { 
+					$.ajax({
+					  type: "POST",
+					  url: 'http://grapsmobile.com/grtv/game.php?method=joingame',
+					  data: { gameCode: gameCode, name: name },
+					  dataType: "json",
+					  success: function(data) {
+						if (data != "false") {
+							PLAYER_ID = data.playerId;
+							GAME_ID = data.gameId;
+							getCurrentGameRound();
+							$.mobile.changePage("#pagePlayGame", { transition: "slideup"});						
+						} else {
+							alert("there was a problem joining this game");
+						}
+					  }
+					});
+				}
+			}
+			
 			function getCurrentGameRound() {
 				var waitingMessage = (ROUND_NUMBER == 1)? "Waiting for other players to start..." : "Waiting for next question...";
 				$("#playGame h2").html(waitingMessage);
@@ -74,7 +96,7 @@
 				
 				$.ajax({
 					type: "POST",
-					url: 'game.php?method=currentgameround',
+					url: 'http://grapsmobile.com/grtv/game.php?method=currentgameround',
 					data: { playerId: PLAYER_ID, gameId: GAME_ID },
 					dataType: "json",
 					success: function(currentround) {
@@ -105,7 +127,7 @@
 				$("#playGame h2").html("Choose an answer:"); 
 				$.ajax({
 					type: "POST",
-					url: 'game.php?method=roundendcheck',
+					url: 'http://grapsmobile.com/grtv/game.php?method=roundendcheck',
 					data: { playerId: PLAYER_ID, gameId: GAME_ID, roundId: ROUND_ID },
 					dataType: "json",
 					success: function(roundend) {
@@ -137,7 +159,7 @@
 			function getAnswers() {
 				$.ajax({
 					type: "POST",
-					url: 'game.php?method=answers',
+					url: 'http://grapsmobile.com/grtv/game.php?method=answers',
 					data: { playerId: PLAYER_ID, questionId: QUESTION_ID, gameId: GAME_ID },
 					dataType: "json",
 					success: function(answers) {
@@ -178,30 +200,7 @@
 				getCurrentGameRound();
 				$.mobile.changePage("#pagePlayGame");				
 			}
-			
-			function joinGame() {
-				var name = $("#txtName").val();
-				var gameCode = $("#txtGameCode").val();
-				if (name != "" && gameCode != "") { 
-					$.ajax({
-					  type: "POST",
-					  url: 'game.php?method=joingame',
-					  data: { gameCode: gameCode, name: name },
-					  dataType: "json",
-					  success: function(data) {
-						if (data != "false") {
-							PLAYER_ID = data.playerId;
-							GAME_ID = data.gameId;
-							getCurrentGameRound();
-							$.mobile.changePage("#pagePlayGame");							
-						} else {
-							alert("there was a problem joining this game");
-						}
-					  }
-					});
-				}
-			}
-			
+						
 			function stopGame() {
 				clearInterval(QUESTION_LOAD_INTERVAL);
 				clearInterval(CHECK_FOR_ROUND_END_INTERVAL);
