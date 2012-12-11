@@ -49,6 +49,7 @@
 			
 			$(function() {
 				$("#btnJoinGame").on('click', function() {					
+					$.mobile.changePage("#pageTest", { transition: "slideup"});
 					joinGame();
 					//skipJoin();
 				});				
@@ -80,7 +81,10 @@
 						} else {
 							alert("there was a problem joining this game");
 						}
-					  }
+					  },
+						error: function() {
+							alert("could not connect to game");
+						}
 					});
 				}
 			}
@@ -189,7 +193,10 @@
 					success: function(response) {
 						if (debug) console.log("answer was submitted");
 						$("#playGame h2").html("Waiting for round to end...");
-					}					
+					},
+					error: function() {
+						alert("could not connect to game");
+					}
 				});
 			}
 			
@@ -267,6 +274,25 @@
 			
             <div data-role="footer" id="pagePlayGameFooter" data-theme="a" data-position="fixed">
             	<h2>Current score = 0 pts</h2>
+            </div>
+            
+		</div><!-- /page -->
+		
+		
+		<div data-role="page" id="pageTest" data-cache="never" data-theme="d">
+
+			<div data-role="header">
+				<h1>jQuery Works!</h1>
+			</div><!-- /header -->
+
+			<div data-role="content">					
+				<div>
+					You made it this far...
+				</div>
+			</div><!-- /content -->
+			
+            <div data-role="footer" id="pagePlayGameFooter" data-theme="a" data-position="fixed">
+            	<h2>Now get the rest working</h2>
             </div>
             
 		</div><!-- /page -->
