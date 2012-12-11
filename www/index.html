@@ -10,7 +10,26 @@
         <script type="text/javascript" src="cordova-2.2.0.js"></script>
         <script type="text/javascript" src="js/jquery.1.8.2.min.js"></script>
         <script type="text/javascript" src="js/jquery.mobile.1.2.min.js"></script>
+		
+		<script type="text/javascript" charset="utf-8">
+			document.addEventListener("deviceready", myDeviceReadyListener, false);
+			
+			function myDeviceReadyListener() {
+			 console.log("Entering index.html.onDeviceReady");
+			 //var element = document.getElementById('deviceProperties');
+			 var html = "";
+			 html = html + "<li>" + 'Device Name: ' + device.name + "</li>";
+			 html = html + "<li>" + 'Device Cordova: ' + device.cordova + "</li>";
+			 html = html + "<li>" + 'Device Platform: ' + device.platform + "</li>";
+			 html = html + "<li>" + 'Device UUID: ' + device.uuid + "</li>";
+			 console.log(html);
 
+			 $("#deviceProperties").html(html);
+			 $("#deviceProperties").listview('refresh');
+			 console.log("Exiting index.html.onDeviceReady");
+			} 
+		</script>
+		
     </head>
     <body>
         <div data-role="page">
@@ -24,6 +43,8 @@
                 
 				<br />
 				<a data-role="button" href="page5.html">Page 5</a>
+				
+				<ul id="deviceProperties"></ul>
 				
 				<a href="page5.html">another one</a>
             </div><!-- /content -->
