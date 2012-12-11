@@ -31,6 +31,8 @@
 			
 			var CURRENT_SCORE = 0;
 			
+			var baseUrl = 'http://grappsmobile.com/grtv/';
+			
 			$(function() {
 				$("#btnJoinGame").on('click', function() {					
 					$.mobile.changePage("#pageTest", { transition: "slideup"});
@@ -53,7 +55,7 @@
 				if (name != "" && gameCode != "") { 
 					$.ajax({
 					  type: "POST",
-					  url: 'http://grapsmobile.com/grtv/game.php?method=joingame',
+					  url: baseUrl + 'game.php?method=joingame',
 					  data: { gameCode: gameCode, name: name },
 					  dataType: "json",
 					  success: function(data) {
@@ -66,8 +68,22 @@
 							alert("there was a problem joining this game");
 						}
 					  },
-						error: function(xhr) {
-							alert("could not connect to game - " + xhr.responseText);
+						error:  function(jqXHR, exception) {
+							if (jqXHR.status === 0) {
+								alert('Not connect.\n Verify Network.');
+							} else if (jqXHR.status == 404) {
+								alert('Requested page not found. [404]');
+							} else if (jqXHR.status == 500) {
+								alert('Internal Server Error [500].');
+							} else if (exception === 'parsererror') {
+								alert('Requested JSON parse failed.');
+							} else if (exception === 'timeout') {
+								alert('Time out error.');
+							} else if (exception === 'abort') {
+								alert('Ajax request aborted.');
+							} else {
+								alert('Uncaught Error.\n' + jqXHR.responseText);
+							}
 						}
 					});
 				}
@@ -84,7 +100,7 @@
 				
 				$.ajax({
 					type: "POST",
-					url: 'http://grapsmobile.com/grtv/game.php?method=currentgameround',
+					url: baseUrl + 'game.php?method=currentgameround',
 					data: { playerId: PLAYER_ID, gameId: GAME_ID },
 					dataType: "json",
 					success: function(currentround) {
@@ -115,7 +131,7 @@
 				$("#playGame h2").html("Choose an answer:"); 
 				$.ajax({
 					type: "POST",
-					url: 'http://grapsmobile.com/grtv/game.php?method=roundendcheck',
+					url: baseUrl + 'game.php?method=roundendcheck',
 					data: { playerId: PLAYER_ID, gameId: GAME_ID, roundId: ROUND_ID },
 					dataType: "json",
 					success: function(roundend) {
@@ -147,7 +163,7 @@
 			function getAnswers() {
 				$.ajax({
 					type: "POST",
-					url: 'http://grapsmobile.com/grtv/game.php?method=answers',
+					url: baseUrl + 'game.php?method=answers',
 					data: { playerId: PLAYER_ID, questionId: QUESTION_ID, gameId: GAME_ID },
 					dataType: "json",
 					success: function(answers) {
@@ -171,7 +187,7 @@
 				$("#controlAnswers .btnAnswer").addClass("ui-disabled");				
 				$.ajax({
 					type: "POST",
-					url: 'game.php?method=answerquestion',
+					url: baseUrl + 'game.php?method=answerquestion',
 					data: { playerId: PLAYER_ID, answerId: answerId, questionId: QUESTION_ID, gameId: GAME_ID },
 					dataType: "json",
 					success: function(response) {
@@ -276,6 +292,11 @@
             
 		</div><!-- /page -->
 
+        <script type="text/javascript" src="js/index.js"></script>
+		<script type="text/javascript">
+            app.initialize();
+        </script>
+		
 		<script type="text/javascript" charset="utf-8">
 			document.addEventListener("deviceready", myDeviceReadyListener, false);
 			
